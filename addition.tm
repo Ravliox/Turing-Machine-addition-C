@@ -1,0 +1,48 @@
+13 S0 S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12
+1 S11
+S0
+44
+S0 $ S0 $ R
+S0 0 S1 $ R
+S0 1 S5 $ R
+S0 # S8 # R
+S1 0 S1 0 R
+S1 1 S1 1 R
+S1 # S2 # R
+S2 a S2 a R
+S2 b S2 b R
+S2 0 S3 b L
+S2 1 S3 a L
+S2 # S3 b L
+S3 a S3 a L
+S3 b S3 b L
+S3 # S4 # L
+S4 0 S4 0 L
+S4 1 S4 1 L
+S4 $ S0 $ R
+S5 0 S5 0 R
+S5 1 S5 1 R
+S5 # S6 # R
+S6 a S6 a R
+S6 b S6 b R
+S6 0 S3 a H
+S6 1 S7 b R
+S6 # S3 a H
+S7 1 S7 0 R
+S7 0 S12 1 L
+S7 # S12 1 L
+S0 # S8 # R
+S8 a S8 1 R
+S8 b S8 0 R
+S8 # S9 # L
+S8 0 S9 0 H
+S8 1 S9 1 H
+S9 0 S9 0 L
+S9 1 S9 1 L
+S9 # S10 # L
+S10 $ S10 # L
+S10 # S11 # H
+S12 0 S12 0 L
+S12 1 S12 1 L
+S12 a S3 a H
+S12 b S3 b H
