@@ -5,57 +5,57 @@ int main ( void )
 	/*------declarari de variabile-----*/
 	long int* stari;
 	long int* stari_finale;
-	long int stare_curenta, stare_urm, stare_initiala;	//starile 
-	char mutare, caracter1, caracter2;					//caracterele din comenzile de tranzitie
+	long int stare_curenta, stare_urm, stare_initiala;	 
+	char mutare, caracter1, caracter2;					
 	
 	int N, M, P;
-	int i, k, t;										//variabile diverse: contoare, cursor, nr_stari etc. 
+	int i, k, t;										 
 	int cod;
 	int cursor = 1;
 
-	FTR** functie_tranz;								//matricea tranzitiilor
+	FTR** functie_tranz;								
 
-	char* banda = malloc (sizeof (char) * 1001);		//banda masinii turing
+	char* banda = malloc (sizeof (char) * 1001);		
 
-	char* linie = malloc (sizeof (char) * 8000);		//linia citita din fisier
+	char* linie = malloc (sizeof (char) * 8000);		
 
 	/*-----deschidem fisierele-----*/
-	FILE* banda_in = fopen ("tape.in", "r");			//fisierul benzii
+	FILE* banda_in = fopen ("tape.in", "r");			
 	fgets (banda, 1001, banda_in);
 	fclose (banda_in);
 	
-	char* banda_cod = malloc (200 * sizeof(char));		//prelucram banda: o codificam si o completam cu '#'
+	char* banda_cod = malloc (200 * sizeof(char));		
 	extract_banda (banda, banda_cod);
 
 	fill_banda(banda);
 	
 
-	FILE* in = fopen ("tm.in", "r");					//fisierul datelor de intrare
+	FILE* in = fopen ("tm.in", "r");					
 	fgets (linie, 8000, in);
 
 	/*-----citim multimea starilor-----*/
 	char* p; 
-	p = strtok (linie, " ");							//impartim linia dupa spatii folosind strtok
+	p = strtok (linie, " ");							
 
 	N = atoi (p);
-	stari = malloc (N * sizeof(long int) );				//declaram vectorul starilor
+	stari = malloc (N * sizeof(long int) );				
 
 	p = strtok (NULL, " ");
 
 	i = 0;
 	
-	while (p)											//citim pana la final
+	while (p)											
 	{
 		k = 0;		
-		char* numar = malloc (10);						//salvam numarul dupa caracter 'S' intr-un string nou
+		char* numar = malloc (10);						
 		for ( ; p[k+1] != '\0'; k++ )
 		{
 			numar[k] = p[k+1];				
 		}
 
-		stari[i] = atol (numar);						//il convertim la long 
+		stari[i] = atol (numar);						 
 		i++;
-		p = strtok (NULL, " ");							//continuam citirea
+		p = strtok (NULL, " ");							
 	}
 
 	
@@ -63,15 +63,15 @@ int main ( void )
 	fgets (linie, 8000, in);
 
 	p = strtok (linie, " ");
-	P = atoi (p);										//numarul starilor finale
+	P = atoi (p);										
 	
 
-	stari_finale = malloc ( sizeof(long int) * P); 		//alocam vectorul starilor finale
+	stari_finale = malloc ( sizeof(long int) * P); 		
 
 	t = 0;											
 	p = strtok (NULL, " \n");		
 	
-	while (p)											//citim starile finale si le punem in vector
+	while (p)											
 	{
 		char* numar = malloc (10);
 		k = 0;
@@ -94,8 +94,8 @@ int main ( void )
 	{
 		numar[k] = linie[k+1];
 	}
-	stare_curenta = atol (numar);						//de la aceasta stare vom incepe deci putem considera starea curenta ca 
-														//fiind starea initiala by default 
+	stare_curenta = atol (numar);						
+														
 	
 	/*-----citim numarul tranzitiile si tranzitiile-----*/
 	fgets (linie, 8000, in);
@@ -109,45 +109,45 @@ int main ( void )
 		functie_tranz[i] = (FTR *) (malloc (200 * sizeof (FTR*) ) );
 	}
 
-	functie_tranz = init_matrix (functie_tranz, N, 200);//initializam celulele matricii
+	functie_tranz = init_matrix (functie_tranz, N, 200);
 
 	
-	char* banda2 = strdup(banda);						//just to be safe
+	char* banda2 = strdup(banda);						
 
 	/*-----incepem citirea tranzitiilor din fisier-----*/
 	while ( (M > 0))									
 	{
 		fgets (linie, 8000, in);
 		
-		p = strtok (linie, " ");						//citim starea din care pornim
+		p = strtok (linie, " ");						
 		char* numar = malloc (10);
 		for (k = 0; p[k+1] != '\0'; k++)
 		{
 			numar[k] = p[k+1];
 		}
 
-		stare_initiala = atol(numar);					//convertim la long
+		stare_initiala = atol(numar);					
 
-		p = strtok (NULL, " ");							//citim caracterul pe care trebuie sa il citim
+		p = strtok (NULL, " ");							
 		caracter1 = p[0];
 
-		p = strtok (NULL, " ");							//citim starea in care trebuie sa mergem
+		p = strtok (NULL, " ");							
 		char* numar1 = malloc (10);
 		for (k = 0; p[k+1] != '\0'; k++)
 		{
 			numar1[k] = p[k+1];
 		}
-		stare_urm = atol (numar1);						//convertim la long
+		stare_urm = atol (numar1);						
 
-		p = strtok (NULL, " ");							//citim caracterul care trebuie scris
+		p = strtok (NULL, " ");							
 		caracter2 = p[0];
 
-		p = strtok (NULL, " \n");						//citim mutarea
+		p = strtok (NULL, " \n");						
 		mutare = p[0];
 		
-		cod = codify (caracter1, banda_cod);			//aflam pe ce coloana a matricii de structuri trebuie sa scriem 
+		cod = codify (caracter1, banda_cod);			
 
-		if (cod == -1)									//daca nu exista il adaugam in vectorul de codificari
+		if (cod == -1)									
 		{
 			banda_cod [strlen(banda_cod)] = caracter1;
 			cod = strlen(banda_cod) - 1;
